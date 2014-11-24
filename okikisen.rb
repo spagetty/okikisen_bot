@@ -8,8 +8,7 @@ class Okikisen
   end
 
   def self.scrape
-    # url = 'http://www.oki-kisen.co.jp/'
-    url = 'https://dl.dropboxusercontent.com/u/102060740/okikisen.html'
+    url = 'http://www.oki-kisen.co.jp/'
     html = Nokogiri.HTML open(url).read
     html.css('#situationArea').text
   end
