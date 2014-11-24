@@ -7,8 +7,11 @@ class Okikisen
     @text = text
   end
 
+  def self.url
+    'http://www.oki-kisen.co.jp/'
+  end
+
   def self.scrape
-    url = 'http://www.oki-kisen.co.jp/'
     html = Nokogiri.HTML open(url).read
     html.css('#situationArea').text
   end
@@ -67,10 +70,18 @@ class Okikisen
     Hash[self.class.patterns.keys.map{|key|[key, send(key)]}].merge error_ships: error_ships
   end
 
+  def sanitize text, size
+    if  text.size > size
+      text[0, size-3] + '...'
+    else
+      text
+    end
+  end
+
   def messages prev: nil
     return [] if prev.nil? || as_json == prev.as_json || error_ships.empty?
     error_ships.map do |name, text|
-      [name, text].join "\n"
+      sanitize("#{name}\n#{text}", 100) + "\n" + self.class.url
     end
   end
 end

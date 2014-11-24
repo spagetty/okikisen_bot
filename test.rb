@@ -80,12 +80,14 @@ should_eq(
   error.messages(prev: normal),
   [
 %(フェリーおき
-終日運休),
+終日運休
+http://www.oki-kisen.co.jp/),
 %(フェリーしらしま
 12月31日（水）　荒天のため臨時ダイヤで運航します
 西郷発 8:30
 ほげ着 8:40
-あああ)
+あああ
+http://www.oki-kisen.co.jp/)
   ]
 )
 
