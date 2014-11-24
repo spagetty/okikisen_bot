@@ -9,7 +9,7 @@ client = Twitter::REST::Client.new(
   access_token_secret: ENV['ACCESS_TOKEN_SECRET']
 )
 
-def scrape
+def update
   prev = PageLog.last
   text = Okikisen.scrape
   PageLog.create text: text
@@ -21,7 +21,6 @@ def scrape
 end
 
 loop do
-  scrape
-  puts 'aa'
+  update
   sleep 15*60
 end
