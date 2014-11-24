@@ -14,6 +14,7 @@ def update
   text = Okikisen.scrape
   PageLog.create text: text
   PageLog.cleanup
+  return unless prev
 
   Okikisen.new(text).messages(prev: Okikisen.new(prev.text)).each do |message|
     client.update message
