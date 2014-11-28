@@ -43,7 +43,7 @@ class Okikisen
     ship_patterns = {
       
     }
-    @text.split(/\r|\n/).each do |line|
+    @text.split(/\r?\n/).each do |line|
       ship = ship_names.find{|s|line.include? s}
       if ship
         current = ship
@@ -80,8 +80,11 @@ class Okikisen
 
   def messages prev: nil
     return [] if prev.nil? || as_json == prev.as_json || error_ships.empty?
-    error_ships.map do |name, text|
+    prev_errors = prev.error_ships
+    error_ships.select{|name, text|
+      text != prev_errors[name] || date != prev.date
+    }.map{|name, text|
       sanitize("#{name}\n#{text}", 100) + "\n" + self.class.url
-    end
+    }
   end
 end
